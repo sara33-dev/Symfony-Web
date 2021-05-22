@@ -14,3 +14,8 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+.idea/.gitignore
+.idea/modules.xml
+.idea/php.xml
+.idea/vcs.xml
+ .idea/wild-series.iml
