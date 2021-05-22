@@ -1,0 +1,12 @@
+body {
+    --primary: red;
+    --secondary: blue;
+}
+
+body {
+    background-color: var(--primary);
+}
+
+nav {
+    background-color: var(--secondary);
+}
