@@ -9,6 +9,7 @@
         {% for episode in episodes %}
             <li>Episode {{ episode.id }} : {{ episode.title }}</li>
             <li>Résumé : {{ episode.description }}</li>
+            <a href="{{ path('program_episode_show', {'program':program.id, 'season':season.id, 'episode':episode.id }) }}">Voir la fiche de l'épisode</a>
         {% endfor %}
     </ul>
 

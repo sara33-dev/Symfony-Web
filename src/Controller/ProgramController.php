@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -80,4 +81,22 @@ class ProgramController extends AbstractController
             'episodes' => $episodes,
         ]);
     }
+
+    /**
+     * Getting a program and a season by id
+     *
+     * @Route("/{program}/seasons/{season}/episodes/{episode}", name="episode_show")
+     * @return Response
+     */
+    public function showEpisode(Program $program, Season $season, Episode $episode): Response
+    {
+
+
+        return $this->render('program/episode_show.html.twig',[
+            'program' => $program,
+            'season'  => $season,
+            'episode' => $episode,
+        ]);
+    }
 }
+
