@@ -13,3 +13,6 @@ https://streamable.com/jfj879
 
 recording quest 13 : CRUD, season and episode :
 https://streamable.com/6gpuev
+
+recording quest 14 : Forma validation, program and category : 
+https://streamable.com/bt7x4v
