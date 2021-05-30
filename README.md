@@ -10,3 +10,6 @@ https://streamable.com/qsoxgr
 
 recording quest 12 : form, new category or program via symfony form : 
 https://streamable.com/jfj879
+
+recording quest 13 : CRUD, season and episode :
+https://streamable.com/6gpuev
