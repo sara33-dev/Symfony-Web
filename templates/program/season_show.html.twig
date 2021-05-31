@@ -3,7 +3,9 @@
 
 {% block body %}
 
-    <h1>{{ program.title }} : Saison {{ season.description }} </h1>
+    <h1>{{ program.title }} : Saison {{ season.number }} </h1>
+    <p>Diffusé en : {{ season.year }} </p>
+    <p>Résumé : {{ season.description }} </p>
     <h2>Tous les épisodes : </h2>
     <ul>
         {% for episode in episodes %}

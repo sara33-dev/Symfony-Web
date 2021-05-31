@@ -8,8 +8,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Title</th>
                 <th>Number</th>
                 <th>Description</th>
                 <th>actions</th>
@@ -18,9 +16,7 @@
         <tbody>
         {% for episode in episodes %}
             <tr>
-                <td>{{ episode.id }}</td>
-                <td>{{ episode.title }}</td>
-                <td>{{ episode.number }}</td>
+                <td>Episode: {{ episode.number }}</td>
                 <td>{{ episode.description }}</td>
                 <td>
                     <a href="{{ path('episode_show', {'id': episode.id}) }}">show</a>
