@@ -20,5 +20,8 @@ https://streamable.com/bt7x4v
 recording quest 15 : Many-To-Many relations, actors and programs : 
 https://streamable.com/uswkg3
 
-recording quest 16 : EntityType, create progrma with actors related : 
+recording quest 16 : EntityType, create program with actors related : 
 https://streamable.com/oa3swm
+
+recording quest 18 : Service, slug added to program and episode : 
+https://streamable.com/5qquz8
