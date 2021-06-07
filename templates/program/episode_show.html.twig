@@ -3,9 +3,31 @@
 
 {% block body %}
 
-    <h1>{{ program.title }} : Saison {{ season.description }} </h1>
-    <h2> Episode {{ episode.number }} : {{ episode.title }} </h2>
+    <h1 class="mb-4 text-center text-dark">{{ program.title }} </h1>
+    <div class="card p-4 mb-5">
+        <h2>Saison {{ season.id}} : </h2>
+        <p>Résumé {{ season.description }}</p>
+
+    <h2> {{ episode.title }} </h2>
 
     <article>Résumé : {{ episode.description }}</article>
+    </div>
+
+    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_CONTRIBUTOR') %}
+
+    <h3 class="mb-3">Ajouter un commentaire à cet épisode</h3>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit" class="btn btn-danger">Publier le commentaire</button>
+    {{ form_end(form) }}
+
+
+    {% for comment in comments %}
+        <div class="mb-3">
+            <p>{{ loop.index }} - {{ comment.comment}}</p>
+        </div>
+    {% endfor %}
+    {% endif %}
 
 {% endblock %}
