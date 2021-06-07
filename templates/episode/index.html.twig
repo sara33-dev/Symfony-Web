@@ -3,7 +3,8 @@
 {% block title %}Episode index{% endblock %}
 
 {% block body %}
-    <h1>Episode index</h1>
+    <h1 class="text-center m-3">Episode index</h1>
+    <a class="btn btn-danger" href="{{ path('episode_new') }}">Create new</a>
 
     <table class="table">
         <thead>
@@ -19,8 +20,8 @@
                 <td>Episode: {{ episode.number }}</td>
                 <td>{{ episode.description }}</td>
                 <td>
-                    <a href="{{ path('episode_show', {'id': episode.id}) }}">show</a>
-                    <a href="{{ path('episode_edit', {'id': episode.id}) }}">edit</a>
+                    <a href="{{ path('episode_show', {'episodeSlug': episode.slug}) }}">show</a>
+                    <a href="{{ path('episode_edit', {'episodeSlug': episode.slug}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -31,5 +32,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('episode_new') }}">Create new</a>
 {% endblock %}

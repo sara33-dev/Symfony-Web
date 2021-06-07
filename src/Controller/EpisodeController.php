@@ -3,20 +3,28 @@
 namespace App\Controller;
 
 use App\Entity\Episode;
+use App\Entity\Program;
+use App\Entity\Season;
 use App\Form\EpisodeType;
 use App\Repository\EpisodeRepository;
+use App\Repository\SeasonRepository;
+use App\Repository\ProgramRepository;
+use App\Service\Slugify;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/episode")
+ * @Route("/episode", name="episode_")
  */
 class EpisodeController extends AbstractController
 {
     /**
-     * @Route("/", name="episode_index", methods={"GET"})
+     * @Route("/", name="index", methods={"GET"})
      */
     public function index(EpisodeRepository $episodeRepository): Response
     {
@@ -26,18 +34,31 @@ class EpisodeController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="episode_new", methods={"GET","POST"})
+     * @Route("/new", name="new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Slugify $slugify, MailerInterface $mailer): Response
     {
         $episode = new Episode();
         $form = $this->createForm(EpisodeType::class, $episode);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $slug = $slugify->generate($episode->getTitle());
+            $episode->setSlug($slug);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($episode);
             $entityManager->flush();
+
+            $email = new Email();
+            $email
+                ->from($this->getParameter('mailer_from'))
+                ->to('your_email@example.com')
+                ->subject('Un nouvelle épisode a été ajouté !')
+                ->html($this->renderView('email/newEpisodeEmail.html.twig', [
+                    'episode' => $episode,
+                ]));
+            $mailer->send($email);
 
             return $this->redirectToRoute('episode_index');
         }
@@ -49,7 +70,8 @@ class EpisodeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="episode_show", methods={"GET"})
+     * @Route("/{episodeSlug}", name="show", methods={"GET"})
+     * @ParamConverter("episode", class=Episode::class, options={"mapping": {"episodeSlug": "slug"}})
      */
     public function show(Episode $episode): Response
     {
@@ -59,14 +81,18 @@ class EpisodeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="episode_edit", methods={"GET","POST"})
+     * @Route("/{episodeSlug}/edit", name="edit", methods={"GET","POST"})
+     * @ParamConverter("episode", class=Episode::class, options={"mapping": {"episodeSlug": "slug"}})
      */
-    public function edit(Request $request, Episode $episode): Response
+    public function edit(Request $request, Episode $episode, Slugify $slugify): Response
     {
         $form = $this->createForm(EpisodeType::class, $episode);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $slug = $slugify->generate($episode->getTitle());
+            $episode->setSlug($slug);
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('episode_index');
@@ -79,7 +105,8 @@ class EpisodeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="episode_delete", methods={"POST"})
+     * @Route("/{episodeSlug}", name="delete", methods={"POST"})
+     * @ParamConverter("episode", class=Episode::class, options={"mapping": {"episodeSlug": "slug"}}))
      */
     public function delete(Request $request, Episode $episode): Response
     {

@@ -3,18 +3,29 @@
 {% block title %}All programs{% endblock %}
 
 {% block body %}
-    <h1>Toutes les séries de la table program : </h1>
+    <h1 class="text-center m-5">Toutes les séries de la table program : </h1>
+    <a class="align-self-center btn btn-danger m-5" href="{{ path('program_new') }}">Ajouter une nouvelle série</a>
+
+    <div class="row list-program">
+
     {% for program in programs %}
-        <div>
-            <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
-            <p>{{ program.summary }}</p>
-            <a href="{{ path("program_show", { id: program.id }) }}">Voir la fiche</a>
+        <div class="col-2">
+            <div class="card mb-3 m-2 bg-dark">
+
+                <img class="card-img-top mb-3" src="{{ program.poster }}" alt="{{ program.title }} poster">
+                <h6 class="card-title">{{ loop.index }} / {{ program.title }} - Catégorie
+                    : {{ program.category.name }}</h6>
+                <p class="card-text">{{ program.summary }}</p>
+                <a class="btn btn-danger" href="{{ path("program_show", { programSlug: program.slug }) }}">Voir la
+                    fiche</a>
+            </div>
         </div>
+
     {% else %}
-        Aucune série trouvée.
+       <p> Aucune série trouvée.</p>
     {% endfor %}
 
-    <a href="{{ path('app_index') }}">
-        Retour à l'accueil
-    </a>
+    </div>
+
+    <a class="btn btn-primary mb-5" href="{{ path('app_index') }}">Accueil</a>
 {% endblock %}

@@ -1,12 +1,36 @@
-body {
-    --primary: red;
-    --secondary: blue;
+@import "~bootstrap/scss/bootstrap";
+@import "_variables";
+@import "image";
+* {
+    font-family: "proxima N";
+    color: pink;
 }
 
 body {
-    background-color: var(--primary);
+    background-color: $primary;
 }
 
 nav {
-    background-color: var(--secondary);
+    background-color: $secondary;
 }
+ul li {
+    list-style-type: none;
+}
+a {
+    color: $linkColor;
+    text-decoration: none;
+}
+
+a:hover {
+    color: $hoverColor;
+    transition: all .5s;
+}
+
+h1 {
+    color: $linkColor;
+}
+
+h2 {
+    color: $hoverColor;
+}
+

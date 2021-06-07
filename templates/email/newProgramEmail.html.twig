@@ -1,0 +1,10 @@
+{% extends 'email/base.html.twig' %}
+
+{% block title %} new program added {% endblock %}
+
+{% block body %}
+    <h1>New program {{ program.title }} created</h1>
+    <p>Hello Wilder,</p>
+    <p>The new program: {{ program.title }} has just been added to Wild-Series</p>
+    <p>Summary: {{ program.summary }}</p>
+{% endblock %}
