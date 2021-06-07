@@ -25,3 +25,6 @@ https://streamable.com/oa3swm
 
 recording quest 18 : Service, slug added to program and episode : 
 https://streamable.com/5qquz8
+
+recording quest 19 : Mail notifications, adding program and episode : 
+https://streamable.com/rtk4l3
