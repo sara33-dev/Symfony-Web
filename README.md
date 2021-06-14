@@ -36,3 +36,6 @@ recording quest 21 :
 
 recording quest 22 : Create Account, my-profile :
 https://streamable.com/t3xyu6
+
+recording quest 23 : Search Type Program, by title or Actor :
+https://streamable.com/tfufw3
