@@ -45,3 +45,6 @@ https://streamable.com/7g0lj1
 
 recording quest 25.1 : add and remove from wathclist : 
 https://streamable.com/d7hubp
+
+recording quest 25.2 : ajanax wathclist : 
+https://streamable.com/2dnw5l
