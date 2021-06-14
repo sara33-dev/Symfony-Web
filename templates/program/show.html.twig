@@ -8,6 +8,8 @@
     <div class="row ">
         <div class="media-body">
             <h1 class="mt-0">{{ program.title }}</h1>
+            <a id="watchlist" href="{{ path('program_watchlist', {id: program.id}) }}">
+            <i class="bi bi-heart{{ app.user.isInWatchlist(program) ? '-fill' : ''}}"></i></a>
             <p>{{ program.summary }}</p>
             <p>Catégorie : {{ program.category.name }}</p>
             <p>Saisons disponibles:</p>

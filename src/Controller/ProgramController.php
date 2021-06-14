@@ -84,6 +84,8 @@ class ProgramController extends AbstractController
                 ]));
             $mailer->send($email);
 
+            $this->addFlash("success", "La nouvelle série a bien été ajoutée.");
+
             return $this->redirectToRoute('program_index');
         }
         return $this->render('program/new.html.twig', [
@@ -167,6 +169,8 @@ class ProgramController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash("success", "La série a bien été mise à jour.");
+
             return $this->redirectToRoute('program_index');
         }
 
@@ -174,5 +178,28 @@ class ProgramController extends AbstractController
             'season' => $program,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/{id}/watchlist", name="watchlist", methods={"GET","POST"})
+     */
+    public function addToWatchList(Program $program, EntityManagerInterface $entityManager): Response
+    {
+
+        if ($this->getUser()->getWatchList()->contains($program)) {
+            $this->getUser()->removeFromWatchlist($program);
+        } else {
+            $this->getUser()->addToWatchlist($program);
+        }
+        $entityManager->flush();
+
+        return $this->redirectToRoute('program_index');
+
+        return $this->json([
+            'isInWatchlist' => $this->getUser()->isInWatchlist($program),
+        ]);
+
+
+
     }
 }
