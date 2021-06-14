@@ -84,6 +84,8 @@ class ProgramController extends AbstractController
                 ]));
             $mailer->send($email);
 
+            $this->addFlash("success", "La nouvelle série a bien été ajoutée.");
+
             return $this->redirectToRoute('program_index');
         }
         return $this->render('program/new.html.twig', [
@@ -166,6 +168,8 @@ class ProgramController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash("success", "La série a bien été mise à jour.");
 
             return $this->redirectToRoute('program_index');
         }

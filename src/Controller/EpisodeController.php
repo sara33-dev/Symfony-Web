@@ -64,6 +64,8 @@ class EpisodeController extends AbstractController
                 ]));
             $mailer->send($email);
 
+            $this->addFlash("success", "L'épisode a bien été ajouté.");
+
             return $this->redirectToRoute('episode_index');
         }
 
@@ -118,6 +120,8 @@ class EpisodeController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash("success", "L'épisode a bien été mise à jour.");
+
             return $this->redirectToRoute('episode_index');
         }
 
@@ -152,6 +156,8 @@ class EpisodeController extends AbstractController
             $entityManager->remove($comment);
 
             $entityManager->flush();
+
+            $this->addFlash("danger", "L'épisode a bien été supprimé.");
         }
         return $this->redirectToRoute('episode_show', [
             'episodeSlug' => $episode->getSlug()
