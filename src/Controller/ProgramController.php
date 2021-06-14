@@ -8,9 +8,16 @@ use App\Entity\Comment;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
+use App\Entity\User;
 use App\Form\CommentType;
 use App\Form\ProgramType;
+use App\Form\SearchProgramFormType;
+use App\Form\SeasonType;
+use App\Repository\CommentRepository;
+use App\Repository\ProgramRepository;
 use App\Service\Slugify;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +27,7 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @Route("/programs", name="program_")
@@ -30,15 +38,22 @@ class ProgramController extends AbstractController
      * @Route("/", name="index")
      * @return Response
      */
-    public function index(): Response
+    public function index(Request $request, ProgramRepository $programRepository): Response
     {
-        $programs = $this->getDoctrine()
-            ->getRepository(Program::class)
-            ->findAll();
+        $form = $this->createForm(SearchProgramFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $search = $form->getData()['search'];
+            $programs = $programRepository->findLikeNameOrActor($search);
+        } else {
+            $programs = $programRepository->findAll();
+        }
 
         return $this->render('program/index.html.twig', [
-        'programs' => $programs]
-        );
+                'programs' => $programs,
+                'form'     => $form->createView(),
+                ]);
     }
 
     /**
@@ -46,25 +61,18 @@ class ProgramController extends AbstractController
      * Display the form or deal with it
      * @Route("/new", name="new")
      */
-    public function new(Request $request, Slugify $slugify, MailerInterface $mailer) : Response
+    public function new(EntityManagerInterface $entityManager, Request $request, Slugify $slugify, MailerInterface $mailer) : Response
     {
-        // Create a new Category Object
         $program = new Program();
-        // Create the associated Form
         $form = $this->createForm(ProgramType::class, $program);
-        // Get data from HTTP request
         $form->handleRequest($request);
-        // Was the form submitted ?
+
         if ($form->isSubmitted() && $form->isValid()) {
             $slug = $slugify->generate($program->getTitle());
             $program->setSlug($slug);
+            $program->setOwner($this->getUser());
 
-            // Deal with the submitted data
-            // Get the Entity Manager
-            $entityManager = $this->getDoctrine()->getManager();
-            // Persist Category Object
             $entityManager->persist($program);
-            // Flush the persisted object
             $entityManager->flush();
 
             $email = (new Email())
@@ -76,10 +84,8 @@ class ProgramController extends AbstractController
                 ]));
             $mailer->send($email);
 
-            // Finally redirect to categories list
             return $this->redirectToRoute('program_index');
         }
-        // Render the form
         return $this->render('program/new.html.twig', [
             "form" => $form->createView(),
         ]);
@@ -136,36 +142,37 @@ class ProgramController extends AbstractController
      * @ParamConverter ("episode", class=Episode::class, options={"mapping": {"episodeSlug": "slug"}})
      * @return Response
      */
-    public function showEpisode(Request $request, Program $program, Season $season, Episode $episode): Response
+    public function showEpisode(Program $program, Season $season, Episode $episode): Response
     {
-        $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $comment->setEpisode($episode);
-            $comment->setAuthor($this->getUser());
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($comment);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('program_episode_show', [
-                'programSlug' => $program->getSlug(),
-                'seasonId' => $season->getId(),
-                'episodeSlug' => $episode->getSlug()
-            ]);
-        }
-
-        $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy(['episode' => $episode], ["id" => "DESC"]);
 
         return $this->render('program/episode_show.html.twig',[
             'program' => $program,
             'season'  => $season,
-            'episode' => $episode,
-            'form'    => $form->createView(),
-            'comments' => $comments
+            'episode' => $episode
+        ]);
+    }
+
+
+    /**
+     * @Route("/{slug}/edit", name="edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, Program $program): Response
+    {
+        if (!($this->getUser() == $program->getOwner())) {
+            throw new AccessDeniedException('only the owner can edit this program');
+        }
+        $form = $this->createForm(ProgramType::class, $program);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('program_index');
+        }
+
+        return $this->render('season/edit.html.twig', [
+            'season' => $program,
+            'form' => $form->createView(),
         ]);
     }
 }
-

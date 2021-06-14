@@ -1,8 +1,5 @@
 .card {
-  height: 20rem;
-  width: auto;
-  background-color: $secondary;
-  border-color: pink;
+  background-color: $primary;
+  border-color: $hoverColor;
   border-radius: 8px;
-  justify-content: center;
 }

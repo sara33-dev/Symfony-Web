@@ -1,5 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Bienvenue !</h1>
-{% endblock %}
+    {% block body %}
+        <h1 class="text-center m-5">BIENVENUE</h1>
+
+        <h1 class="text-center m-5">LES DERNIÈRES SÉRIES AJOUTÉES</h1>
+
+        <div class="container-fluid col-10 mb-5">
+
+            <div class="row">
+
+                {% for program in programs %}
+                    <div class="col-2 col-md-4">
+                        <div class="card mb-3 m-2 bg-dark">
+
+                            <img class="card-img-top mb-3" src="{{ program.poster }}" alt="image série">
+
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+        </div>
+    {% endblock %}

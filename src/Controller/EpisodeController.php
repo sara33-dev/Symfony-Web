@@ -3,12 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Episode;
+use App\Entity\Comment;
 use App\Entity\Program;
 use App\Entity\Season;
 use App\Form\EpisodeType;
+use App\Form\CommentType;
 use App\Repository\EpisodeRepository;
 use App\Repository\SeasonRepository;
 use App\Repository\ProgramRepository;
+use App\Repository\CommentRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Service\Slugify;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -73,10 +77,29 @@ class EpisodeController extends AbstractController
      * @Route("/{episodeSlug}", name="show", methods={"GET"})
      * @ParamConverter("episode", class=Episode::class, options={"mapping": {"episodeSlug": "slug"}})
      */
-    public function show(Episode $episode): Response
+    public function show(Episode $episode, Request $request, EntityManagerInterface $entityManager, CommentRepository $commentRepository): Response
     {
+        $comments = $commentRepository->findAll();
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setEpisode($episode);
+            $comment->setAuthor($this->getUser());
+            $entityManager->persist($comment);
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('episode_show', [
+                'episodeSlug' =>$episode->getSlug()
+            ]);
+        }
+
         return $this->render('episode/show.html.twig', [
             'episode' => $episode,
+            'form'    => $form->createView(),
+            'comments'=> $comments
         ]);
     }
 
@@ -117,5 +140,21 @@ class EpisodeController extends AbstractController
         }
 
         return $this->redirectToRoute('episode_index');
+    }
+
+    /**
+     * @Route("/{episodeSlug}", name="delete_comment", methods={"POST"})
+     * @ParamConverter("episode", class=Episode::class, options={"mapping": {"episodeSlug": "slug"}}))
+     */
+    public function deleteComment(Request $request, Episode $episode, Comment $comment, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($comment);
+
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('episode_show', [
+            'episodeSlug' => $episode->getSlug()
+        ]);
     }
 }

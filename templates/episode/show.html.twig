@@ -31,4 +31,39 @@
     <a href="{{ path('episode_edit', {'episodeSlug': episode.slug}) }}">edit</a>
 
     {{ include('episode/_delete_form.html.twig') }}
+
+    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_CONTRIBUTOR') %}
+<div class="card p-4 m-5">
+        <h3 class="m-3">Les avis publiés </h3>
+
+        {% for comment in comments %}
+            <p class="mb-3">{{ comment.comment }} <br> {{ comment.rate }} /10 - {{ comment.author.email }}</p>
+
+            <form action="{{ path('episode_delete_comment', {'episodeSlug': episode.slug})  }}" method="post">
+                <button type="submit" class="bnt btn-danger">Effacer</button>
+            </form>
+        {% endfor %}
+        </div>
+
+        <div class="card p-4 m-5">
+
+            <h3 class="m-3">Ajouter un commentaire à cet épisode</h3>
+
+            <div class="m3">
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-danger m-3">Publier le commentaire</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+        {% endif %}
+
+    {% if app.user is empty %}
+     <div class="card p-4 m-5">
+        <h3 class="m-3">Connectez-vous pour poster un commentaire.</h3>
+
+        </div>
+    {% endif %}
+
+
 {% endblock %}

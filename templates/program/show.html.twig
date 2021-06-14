@@ -3,29 +3,32 @@
 
 {% block body %}
 
-<div class="media">
-    <img class="align-self-center card" src="{{ program.poster }}" alt="{{ program.title }} poster">
-    <div class="media-body">
-        <h1 class="mt-0">{{ program.title }}</h1>
-        <p>{{ program.summary }}</p>
-        <p>Catégorie : {{ program.category.name }}</p>
-        <p>Saisons disponibles:</p>
-        {% for season in seasons %}
-            <a href="{{ path('program_season_show', {programSlug: program.slug, seasonId: season.id}) }}">{{ season.description }}
-                ({{ season.year }})</a>
-        {% endfor %}
+    <div class="media container-fluid">
+    <img class="card style=" width="150rem;" src="{{ program.poster }}" alt="{{ program.title }} poster">
+    <div class="row ">
+        <div class="media-body">
+            <h1 class="mt-0">{{ program.title }}</h1>
+            <p>{{ program.summary }}</p>
+            <p>Catégorie : {{ program.category.name }}</p>
+            <p>Saisons disponibles:</p>
+            {% for season in seasons %}
+                <a class="btn btn-dark mb-3"
+                   href="{{ path('program_season_show', {programSlug: program.slug, seasonId: season.id}) }}">{{ season.description }}
+                    ({{ season.year }})</a>
+            {% endfor %}
+        </div>
+        <div>
+            <p>Les acteurs qui ont joué dans cette série : </p>
+            {% for actor in program.actors %}
+                <a href="{{ path("actor_show",{ 'id': actor.id }) }}">{{ actor.name }}</a>
+            {% else %}
+                Aucun acteur encore renseigné pour cette série.
+            {% endfor %}
+        </div>
     </div>
-    <div>
-        <p>Les acteurs qui ont joué dans cette série : </p>
-        {% for actor in program.actors %}
-            <a href="{{ path("actor_show",{ 'id': actor.id }) }}">{{ actor.name }}</a>
-        {% else %}
-            Aucun acteur encore renseigné pour cette série.
-        {% endfor %}
-    </div>
-
-    <a href="{{ path('program_index') }}">
+    <a class="btn btn-info" href="{{ path('program_edit', {slug : program.slug}) }}">Modifier le programme</a>
+    <a class="btn btn-info" href="{{ path('program_index') }}">
         Retour à la liste des programmes
     </a>
 
-    {% endblock %}
+{% endblock %}
