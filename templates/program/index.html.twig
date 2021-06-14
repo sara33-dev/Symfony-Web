@@ -25,6 +25,8 @@
 
                         <img class="card-img-top mb-3" src="{{ program.poster }}" alt="{{ program.title }} poster">
                         <h6 class="card-title">{{ program.title }}</h6>
+                        <a id="watchlist" href="{{ path('program_watchlist', {id: program.id}) }}">
+                            <i class="bi bi-heart{{ app.user.isInWatchlist(program) ? '-fill' : ''}}"></i></a>
                         <p class="card-text">Catégorie
                             : {{ program.category.name }}</p>
                         <a class="btn btn-dark" href="{{ path("program_show", { programSlug: program.slug }) }}">Voir la
