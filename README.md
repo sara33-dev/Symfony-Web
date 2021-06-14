@@ -39,3 +39,9 @@ https://streamable.com/t3xyu6
 
 recording quest 23 : Search Type Program, by title or Actor :
 https://streamable.com/tfufw3
+
+recording quest 24 : flash messages, adding, updating and deleting series/season/episodes :
+https://streamable.com/7g0lj1
+
+recording quest 25.1 : add and remove from wathclist : 
+https://streamable.com/d7hubp
