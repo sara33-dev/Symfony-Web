@@ -11,8 +11,8 @@
             <a id="watchlist" href="{{ path('program_watchlist', {id: program.id}) }}">
             <i class="bi bi-heart{{ app.user.isInWatchlist(program) ? '-fill' : ''}}"></i></a>
             <p>{{ program.summary }}</p>
-            <p>Catégorie : {{ program.category.name }}</p>
-            <p>Saisons disponibles:</p>
+            <p>{{ 'category'|trans}} : {{ program.category.name }}</p>
+            <p>{{ 'seasons.available'|trans}}</p>
             {% for season in seasons %}
                 <a class="btn btn-dark mb-3"
                    href="{{ path('program_season_show', {programSlug: program.slug, seasonId: season.id}) }}">{{ season.description }}
@@ -20,17 +20,17 @@
             {% endfor %}
         </div>
         <div>
-            <p>Les acteurs qui ont joué dans cette série : </p>
+            <p>{{ 'actors.in.program'|trans}} : </p>
             {% for actor in program.actors %}
                 <a href="{{ path("actor_show",{ 'id': actor.id }) }}">{{ actor.name }}</a>
             {% else %}
-                Aucun acteur encore renseigné pour cette série.
+                {{ 'actor.no'|trans}}
             {% endfor %}
         </div>
     </div>
-    <a class="btn btn-info" href="{{ path('program_edit', {slug : program.slug}) }}">Modifier le programme</a>
+    <a class="btn btn-info" href="{{ path('program_edit', {slug : program.slug}) }}">{{ 'update.program'|trans}}</a>
     <a class="btn btn-info" href="{{ path('program_index') }}">
-        Retour à la liste des programmes
+        {{ 'back.home'|trans}}
     </a>
 
 {% endblock %}

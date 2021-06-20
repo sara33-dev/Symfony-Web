@@ -3,15 +3,15 @@
 {% block title %}Episode index{% endblock %}
 
 {% block body %}
-    <h1 class="text-center m-3">Episode index</h1>
-    <a class="btn btn-danger" href="{{ path('episode_new') }}">Create new</a>
+    <h1 class="text-center m-3">{{ 'page.title.episode.index'|trans }}</h1>
+    <a class="btn btn-danger" href="{{ path('episode_new') }}">{{ 'add.episode'|trans}}</a>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Number</th>
-                <th>Description</th>
-                <th>actions</th>
+                <th>{{ 'number'|trans }}</th>
+                <th>{{ 'description'|trans }}</th>
+                <th>{{ 'action'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -20,13 +20,13 @@
                 <td>Episode: {{ episode.number }}</td>
                 <td>{{ episode.description }}</td>
                 <td>
-                    <a href="{{ path('episode_show', {'episodeSlug': episode.slug}) }}">show</a>
-                    <a href="{{ path('episode_edit', {'episodeSlug': episode.slug}) }}">edit</a>
+                    <a href="{{ path('episode_show', {'episodeSlug': episode.slug}) }}">{{ 'show'|trans }}</a>
+                    <a href="{{ path('episode_edit', {'episodeSlug': episode.slug}) }}">{{ 'edit'|trans }}</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">{{ 'episode.no'|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>

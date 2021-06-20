@@ -3,6 +3,6 @@
         {{ form_start(form) }}
         {{ form_widget(form) }}
 
-    <button class="btn btn-danger m-5">{{ button_label|default('Save') }}</button>
+    <button class="btn btn-danger m-5">{{ button_label|default({{ 'save'|trans }}) }}</button>
 
 {{ form_end(form) }}

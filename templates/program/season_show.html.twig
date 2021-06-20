@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
-{% block title %}Série #{{ program.slug }} - saison : {{ season.id }}{% endblock %}
+{% block title %}Série #{{ program.slug }} - {{ 'season'|trans}} : {{ season.id }}{% endblock %}
 
 {% block body %}
 
-    <h1>{{ program.title }} : Saison {{ season.number }} </h1>
-    <p>Diffusé en : {{ season.year }} </p>
-    <p>Résumé : {{ season.description }} </p>
-    <h2>Tous les épisodes : </h2>
+    <h1>{{ program.title }} : {{ 'season'|trans}} {{ season.number }} </h1>
+    <p>{{ 'published.in'|trans}} : {{ season.year }} </p>
+    <p>{{ 'resume'|trans}} : {{ season.description }} </p>
+    <h2>{{ 'episodes.all'|trans}} : </h2>
     <ul>
         {% for episode in episodes %}
             <li>{{ episode.slug }} : {{ episode.title }}</li>
-            <li>Résumé : {{ episode.description }}</li>
-            <a href="{{ path('program_episode_show', {'programSlug':program.slug, 'seasonId':season.id, 'episodeSlug':episode.slug }) }}">Voir la fiche de l'épisode</a>
+            <li>{{ 'resume'|trans}}: {{ episode.description }}</li>
+            <a href="{{ path('program_episode_show', {'programSlug':program.slug, 'seasonId':season.id, 'episodeSlug':episode.slug }) }}">{{ 'vew.more'|trans}}</a>
         {% endfor %}
     </ul>
 

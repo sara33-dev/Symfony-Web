@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Category #{{ category.name }}{% endblock %}
+{% block title %}{% trans with {'%category%': category.name} %} page_title_category_show {% endtrans %}{% endblock %}
 
 {% block body %}
 
@@ -8,14 +8,14 @@
         <div>
             <h2> {{ program.id }} : {{ program.title }}</h2>
             <p>{{ program.summary }}</p>
-            <a href="{{ path("program_show", { programSlug: program.slug }) }}">Voir la fiche de la série</a>
+            <a href="{{ path("program_show", { programSlug: program.slug }) }}">{{ 'view.more'|trans }}</a>
         </div>
     {% else %}
-        Aucune série trouvée.
+        {{ 'no.program.found'|trans}}
     {% endfor %}
 
     <a href="{{ path('program_index') }}">
-        Retour à la liste des programmes
+        {{ 'back.index.program'|trans}}
     </a>
 
 {% endblock %}

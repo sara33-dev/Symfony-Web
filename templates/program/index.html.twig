@@ -3,18 +3,18 @@
 {% block title %}All programs{% endblock %}
 
 {% block body %}
-    <h1 class="text-center m-5">TOUS LES PROGRAMMES</h1>
+    <h1 class="text-center m-5">{{ 'page.title.program.index'|trans }}</h1>
 
     <div class="container-fluid col-10 mb-5">
         <div class="row">
             <div class="col-5 align-self-center">
 
                 {{ form_start(form) }}
-                {{ form_row(form.search, {'label': 'Trouver une série'}) }}
-                <button class="btn btn-info mt-2 mb-5">Rechercher</button>
+                {{ form_row(form.search, {'label': 'search'}) }}
+                <button class="btn btn-info mt-2 mb-5">{{ 'search'|trans }}</button>
                 {{ form_end(form) }}
 
-                <a class="btn btn-info mb-5 mt-2" href="{{ path('program_new') }}">Ajouter une nouvelle série</a>
+                <a class="btn btn-info mb-5 mt-2" href="{{ path('program_new') }}">{{ 'add.program'|trans}}</a>
             </div>
         </div>
         <div class="row">
@@ -26,26 +26,27 @@
                         <img class="card-img-top mb-3" src="{{ program.poster }}" alt="{{ program.title }} poster">
                         <h6 class="card-title">{{ program.title }}</h6>
                         <a id="watchlist" href="{{ path('program_watchlist', {id: program.id}) }}">
+                            {% if app.user %}
                             <i class="bi bi-heart{{ app.user.isInWatchlist(program) ? '-fill' : ''}}"></i></a>
-                            <p class="card-text">Catégorie
+                        {% endif %}
+                            <p class="card-text">{{ 'category'|trans }}
                             : {{ program.category.name }}</p>
-                        <a class="btn btn-dark" href="{{ path("program_show", { programSlug: program.slug }) }}">Voir la
-                            fiche</a>
+                        <a class="btn btn-dark" href="{{ path("program_show", { programSlug: program.slug }) }}">{{ 'view.more'|trans }}</a>
                         {% if is_granted("ROLE_ADMIN") or app.user == program.owner %}
-                            <a class="btn" href="{{ path('program_edit', { 'slug': program.slug} ) }}">Éditer</a>
+                            <a class="btn" href="{{ path('program_edit', { 'slug': program.slug} ) }}">{{ 'edit'|trans }}</a>
                         {% endif %}
                     </div>
                 </div>
 
             {% else %}
-                <p> Aucune série trouvée.</p>
+                <p> {{ 'program.no'|trans }}</p>
             {% endfor %}
 
 
         </div>
 <div class="row">
     <div class="col-3 align-self-center">
-        <a class="btn btn-info mb-5" href="{{ path('app_index') }}">Accueil</a>
+        <a class="btn btn-info mb-5" href="{{ path('app_index') }}">{{ 'back.home'|trans}}</a>
     </div>
 </div>
 </div>

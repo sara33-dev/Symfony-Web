@@ -2,12 +2,12 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}
-    <h1 class="text-center m-5">Créer une nouvelle série</h1>
+    <h1 class="text-center m-5">{{ 'add.program'|trans}}</h1>
 
             {{ form_start(form) }}
             {{ form_widget(form) }}
         {{ form_errors(form) }}
-        <input class="btn btn-danger m-5" type='submit' value='Add program'>
+        <input class="btn btn-danger m-5" type='submit' value='{{ 'add.program'|trans}}'>
         {{ form_end(form) }}
 
 {% endblock %}

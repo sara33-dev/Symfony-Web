@@ -1,0 +1,57 @@
+add.program: Ajouter une série
+season: saison
+published.in: publiée en
+resume: résumé
+episodes.all: tous les épisodes
+vew.more: en voir plus
+category: catégorie
+seasons.available: les saisons disponibles
+actors.in.program: les acteurs de la série
+actor.no: aucun acteur
+update.program: modifier la série
+back.home: retour à l'accueil
+add.category: ajouter une catégorie
+page.title.category.index: toutes les catégories
+view.more: en voir plus
+no.category.found: aucune catégorie trouvée
+page_title_category_show: catégorie
+no.program.found: aucune série trouvée
+back.index.program: retour à la liste des séries
+add.episode: ajouter un épisode
+back.index.episode: retour à la liste des épisodes
+page.title.episode.index: épisode
+number: numéro
+description: description
+action: action
+show: voir
+edit: modifier
+episode.no: épisode numéro
+title: titre
+erase: effacer
+add.comment: ajouter un commentaire
+publish.comment: publier un commentaire
+identify.to.publish.comment: connectez-vous pour publier un commentaire
+delete: supprimer
+page.title.actor.index: acteur
+actor.show: voir acteur
+return.index: retour à la liste
+view.actor.program: consulter les séries avec cet acteur
+program.no: aucune série trouvée
+back.index: retour à l'accueil
+programs: séries
+actors: acteurs
+categories: catégories
+seasons: saisons
+episodes: épisodes
+my.profile: mon profil
+deconnexion: déconnection
+connexion: connection
+create.account: se créer un compte
+add.new.season: ajouter une nouvelle saison
+back.list: retour à la liste
+year: année
+descriptions: description
+actions: actions
+season.no: saison numéro
+add.new: ajouter un nouveau
+back.lsit: retour à la liste

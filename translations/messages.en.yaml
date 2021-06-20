@@ -1,0 +1,57 @@
+add.program: add a program
+season: season
+published.in: published in
+resume: resume
+episodes.all: episodes
+vew.more: vew more
+category: category
+seasons.available: all seasons available
+actors.in.program: all actors in this program
+actor.no: no actor found
+update.program: upadte program
+back.home: back home
+add.category: add a category
+page.title.category.index: all categories
+view.more: view more
+no.category.found: no category found
+page_title_category_show: show this category
+no.program.found: no program found
+back.index.program: back to list of programs
+add.episode: add a new episode
+back.index.episode: back to lost of episides
+page.title.episode.index: show this episode
+number: number
+description: description
+action: action
+show: show
+edit: edit
+episode.no: episode no
+title: title
+erase: erase
+add.comment: add a new comment
+publish.comment: publish a comment
+identify.to.publish.comment: please connect to publish a comment
+delete: delete
+page.title.actor.index: all actors
+actor.show: show this actor
+return.index: back to index
+view.actor.program: view all programs with this actor
+program.no: program no
+back.index: back to index
+programs: programs
+actors: actors
+categories: categories
+seasons: seasons
+episodes: episodes
+my.profile: my profile
+deconnexion: deconnexion
+connexion: connexion
+create.account: create an account
+add.new.season: add a new season
+back.list: back to list
+year: year
+descriptions: descriptions
+actions: actions
+season.no: season no
+add.new: add a new
+back.lsit: back to list

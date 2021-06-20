@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
-{% block title %}Série #{{ program.slug }} - saison : {{ season.id }} - episode : {{ episode.slug }}{% endblock %}
+{% block title %}Série #{{ program.slug }} -  {{ season.id }} - {{ episode.slug }}{% endblock %}
 
 {% block body %}
 
     <h1 class="m-4 text-center text-dark">{{ program.title }} </h1>
 
     <div class="card p-4 m-5">
-        <h2 class="btn btn-dark"> Saison {{ season.number }} </h2>
-        <p>Résumé : {{ season.description }} </p>
+        <h2 class="btn btn-dark"> {{ 'season'|trans }} {{ season.number }} </h2>
+        <p>{{ 'resume'|trans }} : {{ season.description }} </p>
 
         <h2 class="btn btn-dark"> {{ episode.title }} </h2>
-        <article>Résumé : {{ episode.description }}</article>
+        <article>{{ 'resume'|trans }} : {{ episode.description }}</article>
     </div>
 
 {% endblock %}
